@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WallGen AI — Generate stunning AI wallpapers for desktop and phone. Browse trending, anime, gaming, cars, gym and dark aesthetic wallpapers." />
+  <title>WallGen AI — Generate Stunning Wallpapers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+/* ── RESET & ROOT ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:       #080810;
+  --bg2:      #0e0e1a;
+  --bg3:      #13131f;
+  --surface:  #1a1a2e;
+  --surface2: #22223a;
+  --border:   rgba(255,255,255,0.08);
+  --border2:  rgba(255,255,255,0.14);
+  --text:     #f0f0ff;
+  --muted:    rgba(240,240,255,0.5);
+  --accent:   #7c6aff;
+  --accent2:  #a855f7;
+  --glass:    rgba(255,255,255,0.04);
+  --glass2:   rgba(255,255,255,0.08);
+  --radius:   16px;
+  --radius-sm:10px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+.hidden { display: none !important; }
+
+/* ── NAV ──────────────────────────────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,8,16,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+}
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: 1rem;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.5rem;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ── BUTTONS ──────────────────────────────────────────────────────────────── */
+.btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: var(--border2);
+  background: var(--glass);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(124,106,255,0.3);
+}
+
+/* ── HERO ─────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(124,106,255,0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero h1 {
+  position: relative;
+  z-index: 1;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent), var(--accent2), #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+/* ── PROMPT CARD ─────────────────────────────────────────────────────────── */
+.prompt-card {
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.prompt-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(135deg,rgba(124,106,255,0.4),rgba(168,85,247,0.2),transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.size-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background: var(--bg3);
+  border-radius: 999px;
+  padding: 0.25rem;
+  width: fit-content;
+}
+.size-btn {
+  padding: 0.375rem 1rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.size-btn svg { width: 14px; height: 14px; }
+.size-btn.active { background: var(--surface2); color: var(--text); }
+
+.prompt-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  line-height: 1.5;
+}
+.prompt-input:focus { border-color: rgba(124,106,255,0.5); }
+.prompt-input::placeholder { color: var(--muted); }
+
+.prompt-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.875rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.style-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.chip {
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.chip:hover, .chip.active {
+  background: rgba(124,106,255,0.15);
+  border-color: rgba(124,106,255,0.4);
+  color: var(--accent);
+}
+.btn-generate {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', system-ui, sans-serif;
+  white-space: nowrap;
+}
+.btn-generate:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(124,106,255,0.4);
+}
+.btn-generate svg { width: 18px; height: 18px; }
+.btn-generate:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ── SEARCH ───────────────────────────────────────────────────────────────── */
+.search-bar {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  margin: 2rem auto 0;
+}
+.search-bar input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem 0.75rem 3rem;
+  color: var(--text);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.search-bar input:focus { border-color: rgba(124,106,255,0.5); }
+.search-bar input::placeholder { color: var(--muted); }
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  display: flex;
+  pointer-events: none;
+}
+.search-icon svg { width: 18px; height: 18px; }
+
+/* ── GENERATING STATE ────────────────────────────────────────────────────── */
+.generating {
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.spinner {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid var(--border2);
+  border-top-color: var(--accent);
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gen-heading {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.gen-status {
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+.gen-progress {
+  width: 100%;
+  max-width: 360px;
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 999px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.gen-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* ── GEN RESULT ──────────────────────────────────────────────────────────── */
+.gen-result section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.gen-img-wrap {
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border);
+}
+.gen-img-wrap img {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+  object-fit: cover;
+}
+.gen-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── BADGES ───────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+}
+.badge svg { width: 14px; height: 14px; }
+.badge-success {
+  color: #22c55e;
+  border: 1px solid rgba(34,197,94,0.3);
+  background: rgba(34,197,94,0.08);
+}
+.badge-live {
+  color: var(--muted);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* ── STATS ────────────────────────────────────────────────────────────────── */
+.stats-row {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+/* ── SECTIONS ─────────────────────────────────────────────────────────────── */
+section {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.section-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.875rem;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.see-all {
+  color: var(--accent);
+  font-size: 0.875rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.see-all:hover { opacity: 0.7; }
+.filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── CATEGORIES ──────────────────────────────────────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.875rem;
+}
+.cat-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  aspect-ratio: 1;
+  transition: transform 0.25s;
+  background: var(--surface);
+}
+.cat-card:hover { transform: scale(1.04); }
+.cat-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.cat-card:hover img { transform: scale(1.08); }
+.cat-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.82), transparent);
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: flex-end;
+  height: 60%;
+}
+
+/* ── MASONRY GALLERY ─────────────────────────────────────────────────────── */
+.masonry {
+  columns: 2;
+  column-gap: 1rem;
+}
+@media (min-width: 600px)  { .masonry { columns: 3; } }
+@media (min-width: 900px)  { .masonry { columns: 4; } }
+@media (min-width: 1200px) { .masonry { columns: 5; } }
+
+.wall-card {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.wall-card img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-sm);
+  transition: transform 0.35s;
+  background: var(--surface2);
+}
+.wall-card:hover img { transform: scale(1.04); }
+.wall-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.875rem;
+}
+.wall-card:hover .wall-overlay { opacity: 1; }
+.wall-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+.wall-action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  flex-shrink: 0;
+}
+.wall-action-btn:hover {
+  background: rgba(255,255,255,0.28);
+  transform: scale(1.1);
+}
+.wall-action-btn svg { width: 16px; height: 16px; }
+.wall-tag {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.75);
+  background: rgba(0,0,0,0.45);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  display: inline-block;
+}
+.wall-res {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.25rem;
+}
+.wall-action-btn.liked svg {
+  fill: #ef4444;
+  stroke: #ef4444;
+}
+
+/* ── LOAD MORE ────────────────────────────────────────────────────────────── */
+.load-more-wrap {
+  text-align: center;
+  margin-top: 2rem;
+}
+.load-more {
+  padding: 0.75rem 2rem;
+  font-size: 0.9375rem;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+}
+.footer-inner { max-width: 1400px; margin: 0 auto; }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+.footer-brand p {
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  line-height: 1.6;
+  max-width: 240px;
+}
+.footer-col h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 0.625rem; }
+.footer-col a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--text); }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.footer-bottom p { color: var(--muted); font-size: 0.8125rem; }
+.social-links { display: flex; gap: 0.75rem; }
+.social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.social-btn:hover {
+  background: var(--surface2);
+  color: var(--text);
+  border-color: var(--border2);
+}
+.social-btn svg { width: 17px; height: 17px; }
+
+/* ── TOAST ────────────────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1.25rem;
+  font-size: 0.875rem;
+  z-index: 1000;
+  transform: translateY(120px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.toast svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.25rem; }
+  .prompt-row { flex-direction: column; align-items: stretch; }
+  .btn-generate { justify-content: center; }
+  .footer-top { grid-template-columns: 1fr; }
+  .gen-actions { flex-direction: column; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="#" class="logo" aria-label="WallGen AI Home">
+        <div class="logo-icon" aria-hidden="true">✦</div>
+        WallGen
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#generate">Generate</a></li>
+        <li><a href="#trending">Trending</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn btn-ghost" id="signinBtn">Sign in</button>
+        <button class="btn btn-primary" id="proBtn">Get Pro ✦</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / GENERATE -->
+  <div class="hero" id="generate">
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <h1>Generate <em>stunning</em><br />AI wallpapers</h1>
+    <p class="hero-sub">Transform your imagination into breathtaking wallpapers. AI-powered, ultra HD, and completely free to download.</p>
+
+    <!-- PROMPT CARD -->
+    <div class="prompt-card">
+      <div class="size-toggle" role="group" aria-label="Wallpaper size">
+        <button class="size-btn active" data-size="desktop" id="sizeDesktop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/></svg>
+          Desktop
+        </button>
+        <button class="size-btn" data-size="phone" id="sizePhone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="17" r="1"/></svg>
+          Phone
+        </button>
+      </div>
+
+      <textarea
+        class="prompt-input"
+        id="promptInput"
+        rows="3"
+        placeholder="Describe your perfect wallpaper… e.g. 'neon cyberpunk city at night with rain reflections, ultra detailed, cinematic'"
+        aria-label="Wallpaper prompt"
+      ></textarea>
+
+      <div class="prompt-row">
+        <div class="style-chips" id="styleChips" role="group" aria-label="Style presets">
+          <button class="chip active" data-style="Cinematic">Cinematic</button>
+          <button class="chip" data-style="Anime">Anime</button>
+          <button class="chip" data-style="Dark Aesthetic">Dark Aesthetic</button>
+          <button class="chip" data-style="Minimalist">Minimalist</button>
+          <button class="chip" data-style="4K Ultra">4K Ultra</button>
+          <button class="chip" data-style="Neon">Neon</button>
+          <button class="chip" data-style="Fantasy">Fantasy</button>
+        </div>
+        <button class="btn-generate" id="generateBtn" aria-label="Generate wallpaper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Generate
+        </button>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-bar">
+      <span class="search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </span>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search wallpapers… anime, space, cars, dark aesthetic…"
+        aria-label="Search wallpapers"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <!-- GENERATING STATE -->
+  <div class="generating hidden" id="generatingBox" aria-live="polite" aria-busy="true">
+    <div class="spinner" aria-hidden="true"></div>
+    <h3 class="gen-heading">Crafting your wallpaper…</h3>
+    <p class="gen-status" id="genStatus">Initializing AI model…</p>
+    <div class="gen-progress">
+      <div class="gen-progress-bar" id="genProgressBar"></div>
+    </div>
+  </div>
+
+  <!-- GENERATED RESULT -->
+  <div class="gen-result hidden" id="genResult">
+    <section>
+      <div class="section-header">
+        <span class="section-title">Your Generated Wallpaper</span>
+        <span class="badge badge-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Ready
+        </span>
+      </div>
+      <div class="gen-img-wrap">
+        <img id="genImg" src="" alt="AI generated wallpaper" />
+      </div>
+      <div class="gen-actions">
+        <button class="btn btn-primary" id="downloadGenBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download HD
+        </button>
+        <button class="btn btn-ghost" id="saveFavBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Save to Favorites
+        </button>
+        <button class="btn btn-ghost" id="regenBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Regenerate
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row" aria-label="Platform stats">
+    <div class="stat">
+      <div class="stat-num">2.4M+</div>
+      <div class="stat-label">Wallpapers Generated</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">840K</div>
+      <div class="stat-label">Active Users</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4K</div>
+      <div class="stat-label">Max Resolution</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">Always</div>
+    </div>
+  </div>
+
+  <!-- TRENDING -->
+  <section id="trending" aria-labelledby="trendingTitle">
+    <div class="section-header">
+      <span class="section-title" id="trendingTitle">🔥 Trending Now</span>
+      <div class="header-right">
+        <div class="filter-pills" id="trendFilter" role="group" aria-label="Filter trending">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="anime">Anime</button>
+          <button class="chip" data-filter="dark">Dark</button>
+          <button class="chip" data-filter="nature">Nature</button>
+        </div>
+        <a href="#gallery" class="see-all">See all →</a>
+      </div>
+    </div>
+    <div class="masonry" id="trendingGrid"></div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories" aria-labelledby="catsTitle">
+    <div class="section-header">
+      <span class="section-title" id="catsTitle">Popular Categories</span>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </section>
+
+  <!-- RECENTLY GENERATED -->
+  <section aria-labelledby="recentTitle">
+    <div class="section-header">
+      <span class="section-title" id="recentTitle">⚡ Recently Generated</span>
+      <span class="badge badge-live">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Live
+      </span>
+    </div>
+    <div class="masonry" id="recentGrid"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" aria-labelledby="galleryTitle">
+    <div class="section-header">
+      <span class="section-title" id="galleryTitle">✦ Gallery</span>
+      <div class="filter-pills" id="galleryFilter" role="group" aria-label="Filter gallery">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="anime">Anime</button>
+        <button class="chip" data-filter="gaming">Gaming</button>
+        <button class="chip" data-filter="cars">Cars</button>
+        <button class="chip" data-filter="gym">Gym</button>
+        <button class="chip" data-filter="football">Football</button>
+      </div>
+    </div>
+    <div class="masonry" id="galleryGrid"></div>
+    <div class="load-more-wrap">
+      <button class="btn btn-ghost load-more" id="loadMoreBtn">Load More</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo" aria-label="WallGen AI">
+            <div class="logo-icon" aria-hidden="true">✦</div>
+            WallGen
+          </a>
+          <p>The world's most powerful AI wallpaper generator. Create, explore, and download stunning wallpapers for free.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#generate">Generate</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#">Pro Plan</a></li>
+            <li><a href="#">API</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">DMCA</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 WallGen AI. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.28a8.27 8.27 0 0 0 4.84 1.55V7.38a4.85 4.85 0 0 1-1.07-.69z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+/**
+ * WallGen AI — app.js
+ * All event listeners registered via addEventListener.
+ * Images use picsum.photos (CORS-friendly, no auth required).
+ */
+
+'use strict';
+
+/* ── IMAGE DATA ────────────────────────────────────────────────────────────── */
+
+// Curated picsum seeds that produce beautiful, varied images.
+// Using fastly.picsum.photos which is more reliable on production.
+const SEEDS = [
+  10, 15, 20, 24, 26, 29, 33, 37, 40, 42,
+  48, 50, 55, 57, 60, 64, 66, 70, 73, 75,
+  80, 82, 87, 90, 93, 96, 100, 104, 107, 110,
+  112, 115, 119, 122, 126, 130, 133, 136, 139, 142,
+  145, 148, 150, 153, 156, 160, 163, 166, 170, 174
+];
+
+// Natural aspect ratios to create masonry variety
+const ASPECT_RATIOS = [
+  { w: 600, h: 900 },   // 2:3 portrait
+  { w: 600, h: 800 },   // 3:4 portrait
+  { w: 600, h: 600 },   // square
+  { w: 600, h: 1050 },  // tall portrait
+  { w: 600, h: 700 },   // slight portrait
+  { w: 600, h: 950 },   // tall
+  { w: 600, h: 850 },   // medium portrait
+  { w: 600, h: 650 },   // slight portrait
+  { w: 600, h: 1000 },  // very tall
+  { w: 600, h: 750 }    // medium
+];
+
+const CATEGORIES_LIST = ['anime', 'gaming', 'cars', 'gym', 'football', 'dark', 'nature', 'space', 'cyberpunk', 'minimalist'];
+
+const CATEGORY_LABELS = {
+  anime:      'Anime',
+  gaming:     'Gaming',
+  cars:       'Cars',
+  gym:        'Gym',
+  football:   'Football',
+  dark:       'Dark Aesthetic',
+  nature:     'Nature',
+  space:      'Space',
+  cyberpunk:  'Cyberpunk',
+  minimalist: 'Minimalist'
+};
+
+const CATEGORY_TAGS = {
+  anime:      '#anime',
+  gaming:     '#gaming',
+  cars:       '#cars',
+  gym:        '#grind',
+  football:   '#football',
+  dark:       '#dark',
+  nature:     '#nature',
+  space:      '#space',
+  cyberpunk:  '#cyberpunk',
+  minimalist: '#minimal'
+};
+
+// Seeds associated with each category for consistent cat card images
+const CAT_SEEDS = {
+  anime: 33, gaming: 64, cars: 87, gym: 42,
+  football: 110, dark: 150, nature: 20, space: 57,
+  cyberpunk: 96, minimalist: 130
+};
+
+/**
+ * Build image URL using picsum.photos
+ * Using /id/{seed}/{w}/{h} format for consistency
+ */
+function imgUrl(seed, w, h) {
+  return `https://fastly.picsum.photos/id/${seed}/${w}/${h}?hmac=placeholder`;
+  // Fallback format (no hmac needed for picsum, just cleaner):
+}
+
+/**
+ * More reliable picsum URL format
+ */
+function picsumUrl(seed, w, h) {
+  return `https://picsum.photos/seed/${seed}/${w}/${h}`;
+}
+
+/**
+ * Generate wallpaper data objects
+ */
+function makeWalls(count, offset) {
+  offset = offset || 0;
+  var walls = [];
+  for (var i = 0; i < count; i++) {
+    var idx = (i + offset) % SEEDS.length;
+    var seed = SEEDS[idx];
+    var ratio = ASPECT_RATIOS[i % ASPECT_RATIOS.length];
+    var cat = CATEGORIES_LIST[i % CATEGORIES_LIST.length];
+    walls.push({
+      src: picsumUrl(seed, ratio.w, ratio.h),
+      fallback: 'https://picsum.photos/seed/' + seed + '/' + ratio.w + '/' + ratio.h,
+      tag: CATEGORY_TAGS[cat],
+      cat: cat,
+      res: (ratio.h > 700) ? '1080×1920' : '2560×1440',
+      seed: seed,
+      id: 'wall-' + seed + '-' + i
+    });
+  }
+  return walls;
+}
+
+/* ── STATE ─────────────────────────────────────────────────────────────────── */
+var state = {
+  size: 'desktop',
+  generating: false,
+  genImgSrc: '',
+  galleryFilter: 'all',
+  trendFilter: 'all',
+  favorites: new Set(),
+  loadOffset: 25,
+  toastTimer: null,
+  genInterval: null,
+  genProgressInterval: null,
+  genProgress: 0
+};
+
+var trendingWalls = makeWalls(12, 0);
+var recentWalls   = makeWalls(10, 12);
+var galleryWalls  = makeWalls(20, 5);
+
+/* ── DOM REFS ──────────────────────────────────────────────────────────────── */
+var dom = {};
+
+function initDom() {
+  dom.generateBtn     = document.getElementById('generateBtn');
+  dom.promptInput     = document.getElementById('promptInput');
+  dom.sizeDesktop     = document.getElementById('sizeDesktop');
+  dom.sizePhone       = document.getElementById('sizePhone');
+  dom.styleChips      = document.getElementById('styleChips');
+  dom.searchInput     = document.getElementById('searchInput');
+  dom.generatingBox   = document.getElementById('generatingBox');
+  dom.genStatus       = document.getElementById('genStatus');
+  dom.genProgressBar  = document.getElementById('genProgressBar');
+  dom.genResult       = document.getElementById('genResult');
+  dom.genImg          = document.getElementById('genImg');
+  dom.downloadGenBtn  = document.getElementById('downloadGenBtn');
+  dom.saveFavBtn      = document.getElementById('saveFavBtn');
+  dom.regenBtn        = document.getElementById('regenBtn');
+  dom.trendingGrid    = document.getElementById('trendingGrid');
+  dom.catGrid         = document.getElementById('catGrid');
+  dom.recentGrid      = document.getElementById('recentGrid');
+  dom.galleryGrid     = document.getElementById('galleryGrid');
+  dom.trendFilter     = document.getElementById('trendFilter');
+  dom.galleryFilter   = document.getElementById('galleryFilter');
+  dom.loadMoreBtn     = document.getElementById('loadMoreBtn');
+  dom.toast           = document.getElementById('toast');
+  dom.toastMsg        = document.getElementById('toastMsg');
+}
+
+/* ── RENDER ────────────────────────────────────────────────────────────────── */
+
+function buildWallCard(wall) {
+  var card = document.createElement('div');
+  card.className = 'wall-card';
+  card.dataset.wallId = wall.id;
+  card.dataset.cat = wall.cat;
+
+  var img = document.createElement('img');
+  img.alt = wall.tag + ' wallpaper';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  // Set src last for lazy loading
+  img.src = wall.src;
+  img.onerror = function() {
+    // Fallback to picsum if primary fails
+    if (this.src !== wall.fallback) {
+      this.src = wall.fallback;
+    }
+  };
+
+  var overlay = document.createElement('div');
+  overlay.className = 'wall-overlay';
+
+  var actions = document.createElement('div');
+  actions.className = 'wall-actions';
+
+  // Like button
+  var likeBtn = document.createElement('button');
+  likeBtn.className = 'wall-action-btn like-btn';
+  likeBtn.setAttribute('aria-label', 'Like wallpaper');
+  likeBtn.dataset.wallId = wall.id;
+  likeBtn.dataset.src = wall.src;
+  likeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+
+  // Download button
+  var dlBtn = document.createElement('button');
+  dlBtn.className = 'wall-action-btn dl-btn';
+  dlBtn.setAttribute('aria-label', 'Download wallpaper');
+  dlBtn.dataset.src = wall.src;
+  dlBtn.dataset.tag = wall.tag;
+  dlBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+
+  // Share button
+  var shareBtn = document.createElement('button');
+  shareBtn.className = 'wall-action-btn share-btn';
+  shareBtn.setAttribute('aria-label', 'Share wallpaper');
+  shareBtn.dataset.src = wall.src;
+  shareBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
+
+  actions.appendChild(likeBtn);
+  actions.appendChild(dlBtn);
+  actions.appendChild(shareBtn);
+
+  var tagEl = document.createElement('span');
+  tagEl.className = 'wall-tag';
+  tagEl.textContent = wall.tag;
+
+  var resEl = document.createElement('div');
+  resEl.className = 'wall-res';
+  resEl.textContent = '↑ ' + wall.res + ' · HD';
+
+  overlay.appendChild(actions);
+  overlay.appendChild(tagEl);
+  overlay.appendChild(resEl);
+
+  card.appendChild(img);
+  card.appendChild(overlay);
+  return card;
+}
+
+function renderGrid(container, walls) {
+  if (!container) return;
+  container.innerHTML = '';
+  var fragment = document.createDocumentFragment();
+  walls.forEach(function(wall) {
+    fragment.appendChild(buildWallCard(wall));
+  });
+  container.appendChild(fragment);
+  bindCardEvents(container);
+}
+
+function renderCats() {
+  if (!dom.catGrid) return;
+  var cats = Object.keys(CAT_SEEDS);
+  dom.catGrid.innerHTML = '';
+  var fragment = document.createDocumentFragment();
+  cats.forEach(function(cat) {
+    var seed = CAT_SEEDS[cat];
+    var card = document.createElement('div');
+    card.className = 'cat-card';
+    card.dataset.cat = cat;
+
+    var img = document.createElement('img');
+    img.src = picsumUrl(seed, 400, 400);
+    img.alt = CATEGORY_LABELS[cat] + ' wallpapers';
+    img.loading = 'lazy';
+    img.onerror = function() {
+      this.style.background = 'var(--surface2)';
+      this.style.display = 'none';
+    };
+
+    var label = document.createElement('div');
+    label.className = 'cat-label';
+    label.textContent = CATEGORY_LABELS[cat];
+
+    card.appendChild(img);
+    card.appendChild(label);
+    fragment.appendChild(card);
+  });
+  dom.catGrid.appendChild(fragment);
+
+  // Bind cat card clicks
+  dom.catGrid.addEventListener('click', function(e) {
+    var card = e.target.closest('.cat-card');
+    if (!card) return;
+    var cat = card.dataset.cat;
+    if (dom.searchInput) {
+      dom.searchInput.value = CATEGORY_LABELS[cat];
+    }
+    filterGallery(cat);
+    // Scroll to gallery
+    var gallerySection = document.getElementById('gallery');
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    showToast('Browsing ' + CATEGORY_LABELS[cat] + ' wallpapers');
+  });
+}
+
+/* ── CARD EVENT DELEGATION ─────────────────────────────────────────────────── */
+function bindCardEvents(container) {
+  container.addEventListener('click', function(e) {
+    var likeBtn = e.target.closest('.like-btn');
+    var dlBtn   = e.target.closest('.dl-btn');
+    var shareBtn = e.target.closest('.share-btn');
+
+    if (likeBtn) {
+      e.stopPropagation();
+      toggleLike(likeBtn);
+      return;
+    }
+    if (dlBtn) {
+      e.stopPropagation();
+      downloadWall(dlBtn.dataset.src, dlBtn.dataset.tag);
+      return;
+    }
+    if (shareBtn) {
+      e.stopPropagation();
+      shareWall(shareBtn.dataset.src);
+      return;
+    }
+  });
+}
+
+/* ── LIKE / DOWNLOAD / SHARE ─────────────────────────────────────────────── */
+function toggleLike(btn) {
+  var id = btn.dataset.wallId;
+  if (state.favorites.has(id)) {
+    state.favorites.delete(id);
+    btn.classList.remove('liked');
+    showToast('Removed from favorites');
+  } else {
+    state.favorites.add(id);
+    btn.classList.add('liked');
+    showToast('Saved to favorites ♥');
+  }
+}
+
+function downloadWall(src, tag) {
+  if (!src) return;
+  var link = document.createElement('a');
+  link.href = src;
+  link.download = 'wallgen-' + (tag || 'wallpaper').replace('#', '') + '.jpg';
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast('Downloading HD wallpaper…');
+}
+
+function shareWall(src) {
+  if (!src) return;
+  if (navigator.share) {
+    navigator.share({ title: 'WallGen AI Wallpaper', url: src }).catch(function() {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(src).then(function() {
+      showToast('Link copied to clipboard!');
+    }).catch(function() {
+      showToast('Copy the URL from your address bar');
+    });
+  } else {
+    showToast('Share: ' + src.slice(0, 40) + '…');
+  }
+}
+
+/* ── FILTERS ────────────────────────────────────────────────────────────────── */
+function setActiveChip(group, activeBtn) {
+  if (!group) return;
+  var chips = group.querySelectorAll('.chip');
+  chips.forEach(function(c) { c.classList.remove('active'); });
+  activeBtn.classList.add('active');
+}
+
+function filterTrending(filter) {
+  var filtered;
+  if (filter === 'all') {
+    filtered = trendingWalls;
+  } else {
+    filtered = trendingWalls.filter(function(w) {
+      return w.cat === filter || w.tag.indexOf(filter) !== -1;
+    });
+    if (!filtered.length) filtered = trendingWalls.slice(0, 6);
+  }
+  renderGrid(dom.trendingGrid, filtered);
+}
+
+function filterGallery(filter) {
+  state.galleryFilter = filter;
+  var filtered;
+  if (filter === 'all') {
+    filtered = galleryWalls;
+  } else {
+    filtered = galleryWalls.filter(function(w) { return w.cat === filter; });
+    if (!filtered.length) filtered = galleryWalls;
+  }
+  renderGrid(dom.galleryGrid, filtered);
+}
+
+/* ── SEARCH ────────────────────────────────────────────────────────────────── */
+var searchDebounce = null;
+
+function handleSearch(val) {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(function() {
+    var lower = val.toLowerCase().trim();
+    if (!lower) {
+      renderGrid(dom.galleryGrid, galleryWalls);
+      return;
+    }
+    var filtered = galleryWalls.filter(function(w) {
+      return w.cat.indexOf(lower) !== -1 ||
+             w.tag.indexOf(lower) !== -1 ||
+             CATEGORY_LABELS[w.cat].toLowerCase().indexOf(lower) !== -1;
+    });
+    renderGrid(dom.galleryGrid, filtered.length ? filtered : galleryWalls);
+  }, 300);
+}
+
+/* ── GENERATE ───────────────────────────────────────────────────────────────── */
+var GEN_STATUSES = [
+  'Initializing AI model…',
+  'Parsing your prompt…',
+  'Generating composition…',
+  'Applying style transfer…',
+  'Rendering details…',
+  'Upscaling to 4K…',
+  'Adding finishing touches…',
+  'Almost done…'
+];
+
+// Large pool of seeds for generation variety
+var GEN_SEEDS = [
+  200, 201, 202, 203, 204, 205, 206, 207, 208, 209,
+  210, 211, 212, 213, 214, 215, 216, 217, 218, 219,
+  220, 221, 222, 223, 224, 225, 226, 227, 228, 229,
+  230, 231, 232, 233, 234, 235, 236, 237, 238, 239,
+  240, 241, 242, 243, 244, 245, 246, 247, 248, 249,
+  250, 251, 252, 253, 254, 255, 256, 257, 258, 259,
+  260, 261, 262, 263, 264, 265, 266, 267, 268, 269,
+  270, 271, 272, 273, 274, 275, 276, 277, 278, 279,
+  280, 281, 282, 283, 284, 285, 286, 287, 288, 289,
+  290, 291, 292, 293, 294, 295, 296, 297, 298, 299
+];
+
+var genSeedIndex = Math.floor(Math.random() * GEN_SEEDS.length);
+
+function getNextGenSeed() {
+  var seed = GEN_SEEDS[genSeedIndex % GEN_SEEDS.length];
+  genSeedIndex++;
+  return seed;
+}
+
+function generateWallpaper() {
+  if (state.generating) return;
+  state.generating = true;
+
+  // Hide previous result
+  dom.genResult.classList.add('hidden');
+  dom.generatingBox.classList.remove('hidden');
+  dom.generateBtn.disabled = true;
+  dom.generatingBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Reset progress
+  state.genProgress = 0;
+  dom.genProgressBar.style.width = '0%';
+
+  // Status cycle
+  var statusIdx = 0;
+  dom.genStatus.textContent = GEN_STATUSES[0];
+
+  clearInterval(state.genInterval);
+  state.genInterval = setInterval(function() {
+    statusIdx = (statusIdx + 1) % GEN_STATUSES.length;
+    dom.genStatus.textContent = GEN_STATUSES[statusIdx];
+  }, 600);
+
+  // Progress bar
+  clearInterval(state.genProgressInterval);
+  state.genProgressInterval = setInterval(function() {
+    if (state.genProgress < 90) {
+      state.genProgress += (90 - state.genProgress) * 0.08;
+      dom.genProgressBar.style.width = state.genProgress.toFixed(1) + '%';
+    }
+  }, 100);
+
+  // Pick a random seed and size
+  var seed = getNextGenSeed();
+  var isPhone = (state.size === 'phone');
+  var w = isPhone ? 600 : 1200;
+  var h = isPhone ? 1067 : 675;
+  var imgSrc = picsumUrl(seed, w, h);
+
+  // Preload the image
+  var preload = new Image();
+  preload.onload = function() {
+    finishGeneration(imgSrc);
+  };
+  preload.onerror = function() {
+    // Try alternate seed
+    var altSeed = getNextGenSeed();
+    var altSrc = picsumUrl(altSeed, w, h);
+    dom.genImg.src = altSrc;
+    finishGeneration(altSrc);
+  };
+
+  // Give at least 4 seconds of "generation" for UX
+  setTimeout(function() {
+    preload.src = imgSrc;
+  }, 4000);
+}
+
+function finishGeneration(imgSrc) {
+  clearInterval(state.genInterval);
+  clearInterval(state.genProgressInterval);
+
+  // Complete progress bar
+  dom.genProgressBar.style.width = '100%';
+
+  setTimeout(function() {
+    dom.generatingBox.classList.add('hidden');
+    dom.genImg.src = imgSrc;
+    state.genImgSrc = imgSrc;
+    dom.genResult.classList.remove('hidden');
+    dom.genResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    dom.generateBtn.disabled = false;
+    state.generating = false;
+    showToast('✦ Wallpaper generated!');
+  }, 400);
+}
+
+/* ── SIZE TOGGLE ─────────────────────────────────────────────────────────── */
+function setSize(size) {
+  state.size = size;
+  if (size === 'desktop') {
+    dom.sizeDesktop.classList.add('active');
+    dom.sizePhone.classList.remove('active');
+  } else {
+    dom.sizePhone.classList.add('active');
+    dom.sizeDesktop.classList.remove('active');
+  }
+}
+
+/* ── LOAD MORE ─────────────────────────────────────────────────────────────── */
+function loadMore() {
+  var extra = makeWalls(10, state.loadOffset);
+  state.loadOffset += 10;
+  var fragment = document.createDocumentFragment();
+  extra.forEach(function(wall) {
+    fragment.appendChild(buildWallCard(wall));
+  });
+  // Need to bind events to the new nodes
+  var tempDiv = document.createElement('div');
+  extra.forEach(function(wall) {
+    tempDiv.appendChild(buildWallCard(wall));
+  });
+  bindCardEvents(tempDiv);
+  while (tempDiv.firstChild) {
+    dom.galleryGrid.appendChild(tempDiv.firstChild);
+  }
+  showToast('More wallpapers loaded');
+}
+
+/* ── TOAST ──────────────────────────────────────────────────────────────────── */
+function showToast(msg) {
+  dom.toastMsg.textContent = msg;
+  dom.toast.classList.add('show');
+  clearTimeout(state.toastTimer);
+  state.toastTimer = setTimeout(function() {
+    dom.toast.classList.remove('show');
+  }, 2800);
+}
+
+/* ── INIT ───────────────────────────────────────────────────────────────────── */
+function init() {
+  initDom();
+
+  // Render all grids
+  renderGrid(dom.trendingGrid, trendingWalls);
+  renderGrid(dom.recentGrid,   recentWalls);
+  renderGrid(dom.galleryGrid,  galleryWalls);
+  renderCats();
+
+  // Generate button
+  dom.generateBtn.addEventListener('click', function() {
+    generateWallpaper();
+  });
+
+  // Also allow Enter in textarea with Ctrl/Cmd
+  dom.promptInput.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      generateWallpaper();
+    }
+  });
+
+  // Size toggle
+  dom.sizeDesktop.addEventListener('click', function() { setSize('desktop'); });
+  dom.sizePhone.addEventListener('click',   function() { setSize('phone'); });
+
+  // Style chips
+  dom.styleChips.addEventListener('click', function(e) {
+    var chip = e.target.closest('.chip');
+    if (chip) chip.classList.toggle('active');
+  });
+
+  // Search
+  dom.searchInput.addEventListener('input', function() {
+    handleSearch(this.value);
+  });
+
+  // Trend filter
+  dom.trendFilter.addEventListener('click', function(e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    setActiveChip(dom.trendFilter, chip);
+    filterTrending(chip.dataset.filter);
+  });
+
+  // Gallery filter
+  dom.galleryFilter.addEventListener('click', function(e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    setActiveChip(dom.galleryFilter, chip);
+    filterGallery(chip.dataset.filter);
+  });
+
+  // Gen result actions
+  dom.downloadGenBtn.addEventListener('click', function() {
+    if (state.genImgSrc) {
+      downloadWall(state.genImgSrc, 'wallgen-ai');
+    }
+  });
+
+  dom.saveFavBtn.addEventListener('click', function() {
+    showToast('Saved to your collection ♥');
+  });
+
+  dom.regenBtn.addEventListener('click', function() {
+    generateWallpaper();
+  });
+
+  // Load more
+  dom.loadMoreBtn.addEventListener('click', function() {
+    loadMore();
+  });
+
+  // Nav buttons (cosmetic)
+  var signinBtn = document.getElementById('signinBtn');
+  var proBtn    = document.getElementById('proBtn');
+  if (signinBtn) signinBtn.addEventListener('click', function() { showToast('Sign in coming soon!'); });
+  if (proBtn)    proBtn.addEventListener('click',    function() { showToast('Pro plan coming soon! 🚀'); });
+}
+
+// Wait for DOM
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+</script>
+</body>
+</html>
